@@ -5,12 +5,14 @@ import java.util.Date;
 
 import javax.persistence.Embeddable;
 
+
 @Embeddable
 public class StockKey implements Serializable{
 
 	private String stockDate;
 	private String ticker;
-	
+	public StockKey()
+	{}
 	public StockKey(String stockDate, String ticker)
 	{
 		this.stockDate = stockDate;
