@@ -38,8 +38,8 @@ public class ExtractModule {
 		//Query query = session.createQuery("SELECT st FROM stockdata st");
 		List list = session.createQuery("from StockData").list();	
 		//List lst = query.getResultList();
-		Iterator it = list.iterator();
-		ArrayList<StockData> StockList = new ArrayList<StockData>();
+		Iterator itt = list.iterator();
+		/*ArrayList<StockData> StockList = new ArrayList<StockData>();
 		
 		while(it.hasNext()){
 			StockData stock = (StockData) it.next();
@@ -47,12 +47,13 @@ public class ExtractModule {
 		}
 		Iterator itt = StockList.iterator();
 		ConvertToXml con = new ConvertToXml();
-		con.convertList(StockList);
+		con.convertList(StockList); */
 		while (itt.hasNext()){
 			StockData stock = (StockData) itt.next();
 //			ArrayList<StockData> StockList = new ArrayList<StockData>();
 //			StockList.add(stock);
 			
+			con.convertList(StockList);
 			
 			System.out.print("Stock Date:"+stock.stockKey.getStockDate());
 			System.out.print("Ticker:"+stock.stockKey.getTicker());
