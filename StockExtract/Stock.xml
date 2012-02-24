@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<stockData>
+    <close>110.0</close>
+    <high>120.0</high>
+    <low>110.0</low>
+    <open>120.0</open>
+    <stockKey>
+        <stockDate>20080226</stockDate>
+        <ticker>AAPL</ticker>
+    </stockKey>
+    <volume>667578</volume>
+</stockData>
