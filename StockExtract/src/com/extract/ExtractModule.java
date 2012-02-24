@@ -48,12 +48,13 @@ public class ExtractModule {
 		Iterator itt = StockList.iterator();
 		ConvertToXml con = new ConvertToXml();
 		con.convertList(StockList); */
+		ConvertToXml con = new ConvertToXml();
 		while (itt.hasNext()){
 			StockData stock = (StockData) itt.next();
 //			ArrayList<StockData> StockList = new ArrayList<StockData>();
 //			StockList.add(stock);
 			
-			con.convertList(StockList);
+			con.convert(stock);
 			
 			System.out.print("Stock Date:"+stock.stockKey.getStockDate());
 			System.out.print("Ticker:"+stock.stockKey.getTicker());
