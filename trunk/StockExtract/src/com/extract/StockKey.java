@@ -5,6 +5,8 @@ import java.util.Date;
 
 import javax.persistence.Embeddable;
 
+import javax.xml.bind.annotation.XmlRootElement;
+
 
 @Embeddable
 public class StockKey implements Serializable{

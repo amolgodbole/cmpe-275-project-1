@@ -1,5 +1,6 @@
 package com.extract;
 
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
@@ -12,6 +13,7 @@ import javax.persistence.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
+import com.convert.ConvertToXml;
 import com.hibernate.HibernateUtil;
 
 public class ExtractModule {
@@ -37,8 +39,21 @@ public class ExtractModule {
 		List list = session.createQuery("from StockData").list();	
 		//List lst = query.getResultList();
 		Iterator it = list.iterator();
-		while (it.hasNext()){
+		ArrayList<StockData> StockList = new ArrayList<StockData>();
+		
+		while(it.hasNext()){
 			StockData stock = (StockData) it.next();
+			StockList.add(stock);
+		}
+		Iterator itt = StockList.iterator();
+		ConvertToXml con = new ConvertToXml();
+		con.convertList(StockList);
+		while (itt.hasNext()){
+			StockData stock = (StockData) itt.next();
+//			ArrayList<StockData> StockList = new ArrayList<StockData>();
+//			StockList.add(stock);
+			
+			
 			System.out.print("Stock Date:"+stock.stockKey.getStockDate());
 			System.out.print("Ticker:"+stock.stockKey.getTicker());
 			System.out.println("Open:"+stock.getOpen());

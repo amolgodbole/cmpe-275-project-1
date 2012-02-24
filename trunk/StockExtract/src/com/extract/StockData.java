@@ -7,7 +7,9 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import javax.xml.bind.annotation.XmlRootElement;
 
+@XmlRootElement
 @Entity
 @Table (name="stockdata")
 public class StockData {
