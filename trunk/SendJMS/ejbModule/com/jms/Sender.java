@@ -54,6 +54,7 @@ public class Sender
        queueSender.send(message);
        // print what we did
        System.out.println("sent: " + message.getText());
+       
 /*                                                       
        //-----------------------------------------------------------------------
        BytesMessage message1 = queueSession.createBytesMessage();
