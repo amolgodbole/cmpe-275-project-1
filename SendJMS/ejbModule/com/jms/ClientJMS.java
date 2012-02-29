@@ -20,7 +20,7 @@ import javax.jms.TextMessage;
  */
 @MessageDriven(
 		activationConfig = { @ActivationConfigProperty(propertyName = "destinationType", propertyValue = "javax.jms.Queue"), 
-				@ActivationConfigProperty(propertyName = "destination", propertyValue = "queue/MyQueue")})
+				@ActivationConfigProperty(propertyName = "destination", propertyValue = "queue/MyQueue1")})
 public class ClientJMS implements MessageListener {
 
     /**
@@ -36,7 +36,12 @@ public class ClientJMS implements MessageListener {
     public void onMessage(Message message) {
         // TODO Auto-generated method stub
     	TextMessage msg = (TextMessage) message;
-    	System.out.println("Received:"+msg.toString());
+    	try {
+			System.out.println("Received:"+msg.getText().toString());
+		} catch (JMSException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
     	
     	
 		/*try {
