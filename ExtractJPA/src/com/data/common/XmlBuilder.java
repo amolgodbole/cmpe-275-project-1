@@ -1,5 +1,12 @@
 package com.data.common;
 
+
+import java.io.BufferedWriter;
+import java.io.DataOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.io.StringWriter;
 import java.util.List;
 
@@ -80,6 +87,14 @@ public class XmlBuilder implements IBuilder{
 			lst.setList(msg);
 			String xml = xstream.toXML(lst);
 			System.out.println("XML Out:" + xml);
+			//write to file
+		    try {
+		        BufferedWriter out = new BufferedWriter(new FileWriter("Stock.xml"));
+		        out.write(xml);
+		        out.close();
+		      } catch (IOException e) {
+		        e.printStackTrace();
+		      }
 		}
 		catch (Exception ex) {
 			ex.printStackTrace();
