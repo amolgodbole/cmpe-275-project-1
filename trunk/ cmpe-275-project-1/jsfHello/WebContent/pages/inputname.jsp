@@ -129,21 +129,7 @@ To Display the Stock Values:
 	</h:selectOneRadio>
 	
 	
-   <div align="right">
-   Stupid Login Module: Ignore if not needed:
-<h:form>
-<h:panelGrid border="0" columns="2">
-	<h:outputText value="UserName"></h:outputText>
-	<h:inputText value="" required="true" requiredMessage=""></h:inputText>
-	
-	<h:outputText value="Password"></h:outputText>
-	<h:inputSecret value="" required="true" requiredMessage=""></h:inputSecret>
-	
-	<h:outputText value="Some Text"></h:outputText>
-	<h:inputText value="" required="true" requiredMessage=""></h:inputText>
-</h:panelGrid>
-</h:form>
-</div>
+
 
 
 </h:form>
