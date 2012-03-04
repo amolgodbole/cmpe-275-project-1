@@ -43,7 +43,7 @@ public class EncoderDecoder {
 	
 	
 	//keep this one and remove the other Arraylist one
-	public void encode(List<Stockdata> msg, String trantype)
+	public String encode(List<Stockdata> msg, String trantype)
 	{
 		SerializationType type = SerializationType.JSON;
 		if (trantype.equalsIgnoreCase("XML")){
@@ -51,7 +51,7 @@ public class EncoderDecoder {
 		}else if (trantype.equalsIgnoreCase("JSON")){
 			type = SerializationType.JSON;
 		}
-		byte[] encoded = get_builder(type).encode(msg);
+		return get_builder(type).encode(msg);
 		
 	}
 	
@@ -67,27 +67,27 @@ public class EncoderDecoder {
 		
 	}*/
 	
-	public void getSpatialData(String format, String ticker, boolean range, String StartDate, String EndDate)
+	public String getSpatialData(String format, String ticker, boolean range, String StartDate, String EndDate)
 	{
 		ExtractData data = new ExtractData();
 		if(range) //gets the spatial data for the specified region with date range
 		{
-			encode(data.extractSpatialData(ticker, StartDate, EndDate), format);
+			return encode(data.extractSpatialData(ticker, StartDate, EndDate), format);
 		}
 		else //gets the spatial entire dataset for the specified region
 		{		
-			encode(data.extractAllSpatialData(ticker), format);
+			return encode(data.extractAllSpatialData(ticker), format);
 		}
 		
 	}
-	public void getTemporalData(String format, String StartDate, String EndDate)
+	public String getTemporalData(String format, String StartDate, String EndDate)
 	{
 		ExtractData data = new ExtractData();
-		encode(data.extractTemporalData(StartDate, EndDate), format);
+		return encode(data.extractTemporalData(StartDate, EndDate), format);
 	}
-	public void getAllData()
+	public String getAllData(String format)
 	{
 		ExtractData data = new ExtractData();
-		encode(data.extract(), "JSON");
+		return encode(data.extract(), format);
 	}
 }
