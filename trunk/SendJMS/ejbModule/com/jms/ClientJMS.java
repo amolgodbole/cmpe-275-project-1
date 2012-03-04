@@ -11,7 +11,9 @@ import javax.ejb.MessageDrivenContext;
 import javax.jms.BytesMessage;
 import javax.jms.JMSException;
 import javax.jms.Message;
+import javax.jms.MessageConsumer;
 import javax.jms.MessageListener;
+import javax.jms.ObjectMessage;
 import javax.jms.TextMessage;
 
 /**
@@ -20,7 +22,7 @@ import javax.jms.TextMessage;
  */
 @MessageDriven(
 		activationConfig = { @ActivationConfigProperty(propertyName = "destinationType", propertyValue = "javax.jms.Queue"), 
-				@ActivationConfigProperty(propertyName = "destination", propertyValue = "queue/MyQueue1")})
+				@ActivationConfigProperty(propertyName = "destination", propertyValue = "queue/MyQueue")})
 public class ClientJMS implements MessageListener {
 
     /**
@@ -33,31 +35,22 @@ public class ClientJMS implements MessageListener {
 	/**
      * @see MessageListener#onMessage(Message)
      */
+  
     public void onMessage(Message message) {
         // TODO Auto-generated method stub
-    	TextMessage msg = (TextMessage) message;
+
+      	//Working - String
+  		TextMessage msg = (TextMessage) message;
+    	
     	try {
 			System.out.println("Received:"+msg.getText().toString());
 		} catch (JMSException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+	
+		
     	
-    	
-		/*try {
-			BytesMessage messageReceived = (BytesMessage)message;
-	    	File outputFile = new File("huge_message_received.dat");
-	    	FileOutputStream fileOutputStream;
-			fileOutputStream = new FileOutputStream(outputFile);
-			BufferedOutputStream bufferedOutput = new BufferedOutputStream(fileOutputStream);
-			messageReceived.setObjectProperty("JMS_JBM_SaveStream", bufferedOutput);
-		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (JMSException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}*/
     	
     	
         
