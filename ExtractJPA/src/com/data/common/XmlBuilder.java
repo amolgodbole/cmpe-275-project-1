@@ -74,10 +74,11 @@ public class XmlBuilder implements IBuilder{
 	}
 
 	@Override
-	public byte[] encode(List<Stockdata> msg) {
+	public String encode(List<Stockdata> msg) {
 		// TODO Auto-generated method stub
-		try 
-		{
+		String xml;
+	/*	try 
+		{*/
 			System.out.println("Xstream......");
 			XStream xstream = new XStream();
 			xstream.alias("stockdata", Stockdata.class);
@@ -85,7 +86,7 @@ public class XmlBuilder implements IBuilder{
 			xstream.addImplicitCollection(StockCollection.class, "list");
 			StockCollection lst = new StockCollection();
 			lst.setList(msg);
-			String xml = xstream.toXML(lst);
+			xml = xstream.toXML(lst);
 			System.out.println("XML Out:" + xml);
 			//write to file
 		    try {
@@ -95,10 +96,10 @@ public class XmlBuilder implements IBuilder{
 		      } catch (IOException e) {
 		        e.printStackTrace();
 		      }
-		}
+	/*	}
 		catch (Exception ex) {
 			ex.printStackTrace();
-		}
-		return null;
+		}*/
+		return xml;
 	}
 }

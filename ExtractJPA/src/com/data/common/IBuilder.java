@@ -12,6 +12,6 @@ public interface IBuilder		//all the builders will implement this interface. all
 {
 	public byte[] encode(Stockdata msg);
 	public byte[] encode(Object msg);
-	public byte[] encode(List<Stockdata> msg);
+	public String encode(List<Stockdata> msg);
 
 }

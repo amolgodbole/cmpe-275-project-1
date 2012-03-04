@@ -43,15 +43,16 @@ public class JsonBuilder implements IBuilder{
 	}
 
 	@Override
-	public byte[] encode(List<Stockdata> msg) {
+	public String encode(List<Stockdata> msg) {
 		try {
 			ObjectMapper mapper = new ObjectMapper();
 			mapper.writeValue(new File("stock.json"), msg);
-			System.out.println("Converted to JSON:" + mapper.writeValueAsString(msg));
+			//System.out.println("Converted to JSON:" + mapper.writeValueAsString(msg));
+			return mapper.writeValueAsString(msg);
 		} catch (Exception ex) {
-			
+			return null;
 		}
-		return null;
+		
 	}
 	
 }
