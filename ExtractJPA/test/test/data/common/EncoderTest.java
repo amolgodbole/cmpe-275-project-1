@@ -5,6 +5,7 @@ import static org.junit.Assert.*;
 import org.junit.Test;
 
 import com.data.common.EncoderDecoder;
+import com.jms.CopyOfSender;
 
 /**
  * @author Nandish
@@ -12,13 +13,14 @@ import com.data.common.EncoderDecoder;
  */
 public class EncoderTest {
 
-	
-	public void testGetAllData() {
+	@Test
+	public void testGetAllData() throws Exception {
 		
 		EncoderDecoder en = new EncoderDecoder();
-		en.getAllData();
-
-		
+		String str = en.getAllData("JSON");
+		System.out.println("Returned String:"+str);
+		CopyOfSender c = new CopyOfSender();
+		c.sendResponse(str);
 	}
 	
 	//@Test
@@ -26,13 +28,21 @@ public class EncoderTest {
 	{
 		System.out.println("testExtractTemporalData");
 		EncoderDecoder en = new EncoderDecoder();
-		en.getTemporalData("JSON", "20080225", "20080229");
+		en.getTemporalData("XML", "20080225", "20080229");
 	}
 
-	@Test
+	//@Test
 	public void testGetSpatialData()
 	{
 		EncoderDecoder en = new EncoderDecoder();
 		en.getSpatialData("XML", "AAPL", true, "20080227", "20080228");
 	}
+	
+	//@Test
+	public void testSender() throws Exception
+	{
+		CopyOfSender c = new CopyOfSender();
+		c.sendResponse("Hello Nandish");
+	}
 }
+
