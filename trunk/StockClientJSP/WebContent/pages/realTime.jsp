@@ -1,6 +1,8 @@
+
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
-<%@ taglib prefix="f"  uri="http://java.sun.com/jsf/core"%>
-<%@ taglib prefix="h"  uri="http://java.sun.com/jsf/html"%>
+<%@page import="com.stocks.entity.*" %>
+<%@page import="com.stocks.entity.StockData"%>
+<%@ page import = "java.text.*" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -8,60 +10,41 @@
 <title>Real Time Feeds</title>
 </head>
 <body>
-<f:view>
-<h:form id="realTime">
-Hi! Welcome to the Real Time Page
+<form>
+<center> Hi! Welcome to the Real Time Page </center>
 <br>
 <br>
-<h:commandButton value="Get Data" action="#{stockDataMB.}" />
-<br>
-The current Values of Stock are:
-<br>
-<h:dataTable border="1" value="#{stockData.}" var="var">
-	<h:column id="column1">
-		<f:facet name="header">
-			<h:outputText value="Ticker"></h:outputText>
-		</f:facet>
-		<h:outputText value="#{var.}"></h:outputText>
-	</h:column>
 
-	<h:column id="column3">
-		<f:facet name="header">
-			<h:outputText value="Open"></h:outputText>
-		</f:facet>
-		<h:outputText value="#{var}"></h:outputText>
-	</h:column>
-	<h:column id="column3">
-		<f:facet name="header">
-			<h:outputText value="High"></h:outputText>
-		</f:facet>
-		<h:outputText value="#{var}"></h:outputText>
-	</h:column>
-	<h:column id="column4">
-		<f:facet name="header">
-			<h:outputText value="Low"></h:outputText>
-		</f:facet>
-		<h:outputText value="#{var}"></h:outputText>
-	</h:column>
-	<h:column id="column5">
-		<f:facet name="header">
-			<h:outputText value="Close"></h:outputText>
-		</f:facet>
-		<h:outputText value="#{var}"></h:outputText>
-	</h:column>
-		<h:column id="column6">
-		<f:facet name="header">
-			<h:outputText value="Volume"></h:outputText>
-		</f:facet>
-		<h:outputText value="#{var}"></h:outputText>
-	</h:column>
-	
-	</h:dataTable>
+<br>
+<center> The current Values of Stock are:</center>
+<br>
+<table align = "center"  border = 1>
+<tr><td colspan ="2"><h2 align = "center"><font color="blue">Stock Data</font></h2></td></tr>
 
+<tr>
+	<td align = "center" width = "100px"><b>Stock Ticker</b></td>
+ 	<td align = "center" width = "100px"><b>Current Value</b></td>
+ 	
+ </tr> 
+ </table>
 
-<h:commandLink value="Back" action="home">
-</h:commandLink>
-</h:form>
-</f:view>
+<center>
+ <table>
+<tr>
+	<td>
+	<table align = "center">
+ 	<tr>            
+ 	<% 
+		StockData[] allStocks = (StockData[])request.getAttribute("stockData");
+ 		int count= allStocks.length;
+ 		for(int i=0; i< allStocks.length; i++){ %>
+ 	<td align = "center" width = "100px" height = "50px"><%= allStocks[i].getId().getTicker()%></td>
+  	<td align = "center" width = "100px" height = "50px"><%= allStocks[i].getOpen() %></td>
+	<% }%>
+	</tr>
+</table>
+</center>
+</form>
+
 </body>
 </html>
