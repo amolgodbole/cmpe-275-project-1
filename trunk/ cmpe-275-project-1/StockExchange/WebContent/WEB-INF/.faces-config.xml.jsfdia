@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PROCESS model-entity="JSFProcess">
+ <PROCESS-ITEM NAME="rules:#pages#home.jsp" PATH="/pages/home.jsp"
+  SHAPE="132,226,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules:#pages#home.jsp:0" NAME="item"
+   PATH="/pages/home.jsp" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT ID="download::#pages#download.jsp" NAME="output"
+    PATH="/pages/download.jsp" TARGET="rules:#pages#download.jsp"
+    TITLE="download" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="realTime::#pages#realTime.jsp"
+    NAME="output1" PATH="/pages/realTime.jsp"
+    TARGET="rules:#pages#realTime.jsp" TITLE="realTime" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM NAME="rules:#pages#download.jsp"
+  PATH="/pages/download.jsp" SHAPE="360,96,50,41" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules:#pages#download.jsp:0" NAME="item"
+   PATH="/pages/download.jsp" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT ID="home::#pages#home.jsp" NAME="output"
+    PATH="/pages/home.jsp" TARGET="rules:#pages#home.jsp" TITLE="home" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM NAME="rules:#pages#realTime.jsp"
+  PATH="/pages/realTime.jsp" SHAPE="376,368,50,41" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules:#pages#realTime.jsp:0" NAME="item"
+   PATH="/pages/realTime.jsp" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT ID="home::#pages#home.jsp" NAME="output"
+    PATH="/pages/home.jsp" TARGET="rules:#pages#home.jsp" TITLE="home" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+</PROCESS>
