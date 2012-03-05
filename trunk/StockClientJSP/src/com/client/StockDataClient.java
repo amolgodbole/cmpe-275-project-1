@@ -35,7 +35,7 @@ public class StockDataClient {
 		
 	}
 	
-	public String getDownloadFile(String format)
+	public String getDownloadFile()
 	{
 		String result;
 		try{
@@ -48,7 +48,7 @@ public class StockDataClient {
 			StockProviderRemote stock = (StockProviderRemote) PortableRemoteObject.narrow(ref, StockProviderRemote.class);
 			
 			//result = stock.getAllData(format);
-			result = stock.getDownloadLink();
+			result = stock.getDownloadFile();
 			return result;	
 			
 		}
