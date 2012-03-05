@@ -45,6 +45,5 @@
 </table>
 </center>
 </form>
-
-</body>
+<a href= "home.jsp">Back</a> </body>
 </html>
