@@ -11,11 +11,19 @@
 Please select the type of Request:
 <br>
 <br>
+
 <p>
 <form id="form3" method="post" action="Downloadlink"> 
 	<div class="form-row">
 		<center>
             <input name ="Download" class="submit" type="submit" value="Download data">
+        </center>
+	</div>  
+</form>
+<form id ="form4" method="post" action="RealTimeData">
+	<div class="form">
+		<center>
+            <input name ="RealTimeFeeds" class="submit" type="submit" value="Real Time Feeds">
         </center>
 	</div>  
 </form>
