@@ -19,7 +19,7 @@ import com.data.entity.Stockdata;
 /**
  * Session Bean implementation class StockProvider
  */
-@Stateless
+@Stateless(name="StockProvider") 
 public class StockProvider implements StockProviderRemote, StockProviderLocal {
 
     /**
