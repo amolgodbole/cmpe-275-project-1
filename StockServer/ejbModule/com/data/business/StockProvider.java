@@ -11,6 +11,7 @@ import javax.persistence.TypedQuery;
 import com.data.builder.IBuilder;
 import com.data.builder.JsonBuilder;
 import com.data.builder.XmlBuilder;
+import com.data.builder.CSVBuilder;
 import com.data.entity.Stockdata;
 
 
@@ -31,7 +32,7 @@ public class StockProvider implements StockProviderRemote, StockProviderLocal {
 		em = emf.createEntityManager();
     }
 
-    public enum SerializationType{XML, JSON};
+    public enum SerializationType{XML, JSON, CSV};
 	
 	public IBuilder get_builder(SerializationType type)
 	{
@@ -42,6 +43,9 @@ public class StockProvider implements StockProviderRemote, StockProviderLocal {
 				
 			case JSON:
 				return new JsonBuilder();		//if type is JSON, call JsonBuilder
+				
+			case CSV:
+				return new CSVBuilder();		//if type is CSV, call CSVBuilder
 				
 		}
 		return null;
@@ -54,6 +58,8 @@ public class StockProvider implements StockProviderRemote, StockProviderLocal {
 			type = SerializationType.XML;
 		}else if (trantype.equalsIgnoreCase("JSON")){
 			type = SerializationType.JSON;
+		}else if (trantype.equalsIgnoreCase("CSV")){
+			type = SerializationType.CSV;
 		}
 		return get_builder(type).encode(msg);
 		
