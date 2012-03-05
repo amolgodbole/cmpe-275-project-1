@@ -15,11 +15,7 @@ Hi Download Page
 <h:commandLink value="Back" action="home">
 </h:commandLink>	
 </h:form>
-<%public String hyperlink1_action() {
-	  this.getSessionBean1().setDownloadFile((String)hyperlink1.getText());
-	  return "download";
-	}
- %>
+
 
 </f:view>
 </body>
