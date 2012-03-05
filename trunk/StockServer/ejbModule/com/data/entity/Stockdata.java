@@ -26,15 +26,15 @@ public class Stockdata implements Serializable {
 	@EmbeddedId
 	private StockdataPK id;
 	
-	private double close;
+	private Double close;
 
-	private double high;
+	private Double high;
 
-	private double low;
+	private Double low;
 
-	private double open;
+	private Double open;
 
-	private int volume;
+	private Integer volume;
 
     public Stockdata() {
     }
@@ -47,7 +47,7 @@ public class Stockdata implements Serializable {
 		this.id = id;
 	}
 	
-	public double getClose() {
+	public Double getClose() {
 		return this.close;
 	}
 
@@ -55,7 +55,7 @@ public class Stockdata implements Serializable {
 		this.close = close;
 	}
 
-	public double getHigh() {
+	public Double getHigh() {
 		return this.high;
 	}
 
@@ -63,7 +63,7 @@ public class Stockdata implements Serializable {
 		this.high = high;
 	}
 
-	public double getLow() {
+	public Double getLow() {
 		return this.low;
 	}
 
@@ -71,7 +71,7 @@ public class Stockdata implements Serializable {
 		this.low = low;
 	}
 
-	public double getOpen() {
+	public Double getOpen() {
 		return this.open;
 	}
 
@@ -79,7 +79,7 @@ public class Stockdata implements Serializable {
 		this.open = open;
 	}
 
-	public int getVolume() {
+	public Integer getVolume() {
 		return this.volume;
 	}
 
