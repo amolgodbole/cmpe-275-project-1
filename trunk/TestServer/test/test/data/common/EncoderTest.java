@@ -15,17 +15,17 @@ import com.data.business.StockProvider;
  */
 public class EncoderTest {
 
-	//@Test
+	@Test
 	public void testGetAllData() throws Exception {
 		
 		StockProvider en = new StockProvider();
-		String str = en.getAllData("XML");
+		String str = en.getAllData("CSV");
 		System.out.println("Returned String:"+str);
 //		ResponseProducer c = new ResponseProducer();
 //		c.sendResponse(str);
 	}
 	
-	@Test
+	//@Test
 	public void testExtractTemporalData()
 	{
 		System.out.println("testExtractTemporalData");
