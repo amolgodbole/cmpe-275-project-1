@@ -15,7 +15,6 @@ public interface StockProviderRemote {
 	public List<Stockdata> extract();
 	//Temporal
 	public String getTemporalData(String StartDate, String EndDate, String format);	
-		
 	//Spatial data
 	public String getSpatialLocation(String location, String format);
 	public String getSpatialIndustry(String industry, String format);
@@ -24,4 +23,5 @@ public interface StockProviderRemote {
 	public List<String> getTicker();
 	public List<String> getLocation();
 	public List<String> getSector();
+	public List<String> getIndustry();
 }
