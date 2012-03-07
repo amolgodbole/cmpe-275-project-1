@@ -16,7 +16,8 @@ import com.data.builder.JsonBuilder;
 import com.data.builder.XmlBuilder;
 import com.data.builder.CSVBuilder;
 import com.data.entity.Stockdata;
-import com.ibytecode.entities.Project;
+import com.jms.response.ResponseProducer;
+
 
 
 
@@ -90,14 +91,47 @@ public class StockProvider implements StockProviderRemote, StockProviderLocal {
 		return encode(extractTemporalData(StartDate, EndDate), format);
 	}
 	
+	
+	
+	
 	@Override
 	public String getAllData(String format)
 	{
 		//ExtractData data = new ExtractData();
 		System.out.println("get all data");
-		return encode(extract(), format);
+		/*//-----Sending on JMS
+		try {
+			System.out.println("trying to send..on queue");
+			String str = encode(extract(), format);		
+			ResponseProducer c = new ResponseProducer();		
+			c.sendResponse(str);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			System.out.println("in getallData exception");
+		}
+		//--------------
+*/		return encode(extract(), format);
 	}
 	
+	@Override
+	public String getSpatialLocation(String location, String format)
+	{	
+		return encode(extractSpatialLocation(location), format);
+	}
+	@Override
+	public String getSpatialIndustry(String industry, String format)
+	{	
+		return encode(extractSpatialIndustry(industry), format);
+	}
+	@Override
+	public String getSpatialSector(String sector, String format)
+	{	
+		System.out.println("get sector");
+		return encode(extractSpatialSector(sector), format);
+	}
+	
+	// Extract Methods*************************************************************************************************
 	//getSpatialData - gets the spatial data with region and range
 	public List<Stockdata> extractSpatialData(String ticker, String StartDate, String EndDate)
 	{
@@ -145,23 +179,26 @@ public class StockProvider implements StockProviderRemote, StockProviderLocal {
 	@Override
 	public List<Stockdata> extract()
 	{
+		//em.getTransaction().begin();
 		System.out.println("in extract....");
 		//em.getTransaction().begin();
-	/*	TypedQuery<Stockdata> query = em.createQuery("SELECT st FROM Stockdata st ", Stockdata.class);
-		List<Stockdata> lst = query.getResultList();
-*/		//em.getTransaction().commit();
+		/*TypedQuery<Stockdata> query = em.createQuery("SELECT st FROM Stockdata st ", Stockdata.class);
+		List<Stockdata> lst = query.getResultList();*/
+		//em.getTransaction().commit();
 		//em.close();
 		String q = "SELECT p from " + Stockdata.class.getName() + " p";
         Query query = em.createQuery(q);
         List<Stockdata> lst = query.getResultList();
-		
+       // em.getTransaction().commit();
+        //em.close();
 		System.out.println("extract done....");
 		return lst;
 	}
 	
 	@Override
-	public List<Stockdata> getExtract()
+	public List<Stockdata> getRealTimeData()
 	{
+		em.getTransaction().begin();
 		System.out.println("in extract....");
 		//em.getTransaction().begin();
 	/*	TypedQuery<Stockdata> query = em.createQuery("SELECT st FROM Stockdata st ", Stockdata.class);
@@ -171,8 +208,85 @@ public class StockProvider implements StockProviderRemote, StockProviderLocal {
 		String q = "SELECT p from " + Stockdata.class.getName() + " p";
         Query query = em.createQuery(q);
         List<Stockdata> lst = query.getResultList();
-		
+        em.getTransaction().commit();
+		em.close();
 		System.out.println("extract done....");
 		return lst;
 	}
+	
+	public List<Stockdata> extractSpatialLocation(String location)
+    {
+            
+            //em.getTransaction().begin();
+            /*Query tick = em.createQuery("select s.stockDate,s.ticker,s.close,s.high,s.low,s.open,s.volume from ticker t, Stockdata s where t.ticker = s.ticker and( t.location like :location)");
+            tick.setParameter("location",location);*/
+            
+            //TypedQuery<Stockdata> query=em.createQuery("select s.stockDate,s.ticker,s.close,s.high,s.low,s.open,s.volume from Ticker t, Stockdata s where t.Ticker = s.Ticker and( t.location like :location)", Stockdata.class);
+            //Query query = em.createQuery("select d.id.ticker,d.open,d.close,d.high,d.volume,d.low FROM Stockdata d,Ticker m where m.ticker=d.id.ticker and m.country=:location");
+            Query query = em.createQuery("select d FROM Stockdata d,Ticker m where m.ticker=d.id.ticker and m.country=:location");
+            query.setParameter("location", location);
+            List<Stockdata> ls=(List<Stockdata>) query.getResultList();
+            
+            /*List ls = query.getResultList();
+
+                    Iterator it1 = ls.iterator();
+                    while (it1.hasNext()){
+                            
+                            Object[] obj = (Object[]) it1.next();
+                    }
+*/          //em.getTransaction().commit();
+            //em.close();
+            return ls;
+            /*Query query = em.createQuery("select s.ticker from ticker t, stockdata s where t.ticker = s.ticker and( t.location like 'USA')");
+            //query.setParameter("location", location);
+            List rs = query.getResultList();
+            int size=rs.size();
+            List<Stockdata> lst=new ArrayList<Stockdata>();
+             for(int i=0;i<size;i++) {
+
+               Object[] obj =  (Object[])rs.get(i);
+               Ticker t = (Ticker) obj[1];
+               Stockdata s = (Stockdata) obj[0];
+               lst.add(s);
+             }
+             
+             return lst;
+*/                        
+    }
+	
+	public List<Stockdata> extractSpatialIndustry(String industry)
+    {
+            
+            //em.getTransaction().begin();
+           
+          
+            Query query = em.createQuery("select d FROM Stockdata d,Ticker m where m.ticker=d.id.ticker and m.industry=:industry");
+            query.setParameter("industry", industry);
+            List<Stockdata> ls=(List<Stockdata>) query.getResultList();
+            
+         
+          //em.getTransaction().commit();
+            //em.close();
+            return ls;
+            
+    }
+	
+	public List<Stockdata> extractSpatialSector(String sector)
+    {
+		System.out.println("sector0");
+            //em.getTransaction().begin();
+           
+            System.out.println("sector0.1");
+            Query query = em.createQuery("select d FROM Stockdata d,Ticker m where m.ticker=d.id.ticker and m.sector=:sector");
+            query.setParameter("sector", sector);
+            System.out.println("sector1");
+            List<Stockdata> ls=(List<Stockdata>) query.getResultList();
+            System.out.println("sector2");
+         
+          //em.getTransaction().commit();
+            //em.close();
+            return ls;
+            
+    }
+	
 }
