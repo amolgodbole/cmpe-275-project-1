@@ -17,7 +17,7 @@ public class CSVBuilder implements IBuilder{
 		String csvdata = null;
 		try {
 			
-			FileWriter writer = new FileWriter("C:\\Kavya\\stocks.csv");
+			FileWriter writer = new FileWriter("E:\\stocks.csv");
 	
 			writer.append("StockDate");
 			writer.append(',');
