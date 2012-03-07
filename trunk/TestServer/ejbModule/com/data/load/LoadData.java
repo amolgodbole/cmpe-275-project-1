@@ -8,6 +8,7 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
+import javax.persistence.PersistenceContext;
 
 
 
@@ -23,18 +24,19 @@ public class LoadData {
 	/**
 	 * @param args
 	 */
+	@PersistenceContext(unitName = "JPADB")
 	EntityManager em;
-	EntityManagerFactory emf;
+	//EntityManagerFactory emf;
 	String[] temp;
 	public LoadData()
 	{
-		emf = Persistence.createEntityManagerFactory("JPADB");
-		em = emf.createEntityManager();
+//		emf = Persistence.createEntityManagerFactory("JPADB");
+//		em = emf.createEntityManager();
 	}
 	
 	public void beginTran()
 	{
-		em.getTransaction().begin();
+		//em.getTransaction().begin();
 	}
 	
 	public void insert(String record)
@@ -59,8 +61,8 @@ public class LoadData {
 	
 	public void closecon()
 	{
-		em.getTransaction().commit();
-		em.close();
+		//em.getTransaction().commit();
+		//em.close();
 	}
 	
 	
