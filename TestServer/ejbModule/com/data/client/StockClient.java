@@ -6,10 +6,9 @@ import javax.naming.Context;
 import javax.naming.NamingException;
  
 import com.data.business.StockProviderRemote;
+import com.data.clientutility.JNDILookupClass;
 import com.data.entity.Stockdata;
-import com.ibytecode.business.IProject;
-import com.ibytecode.clientutility.JNDILookupClass;
-import com.ibytecode.entities.Project;
+
  
 public class StockClient {
     private static final String LOOKUP_STRING = "StockProvider/remote";
@@ -19,14 +18,14 @@ public class StockClient {
  
     	String str = bean.getAllData("JSON");
     	System.out.println("Remote result:"+str);
-    	
+    /*	
     	List<Stockdata> l = bean.extract();
     	
     	Iterator<Stockdata> it = l.iterator();
     	while (it.hasNext())
     	{
     		System.out.println(it.next().getOpen());
-    	}
+    	}*/
     	
     	
     	
