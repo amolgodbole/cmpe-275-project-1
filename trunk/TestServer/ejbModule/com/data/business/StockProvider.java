@@ -1,7 +1,11 @@
 package com.data.business;
 
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Random;
 
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -16,6 +20,7 @@ import com.data.builder.JsonBuilder;
 import com.data.builder.XmlBuilder;
 import com.data.builder.CSVBuilder;
 import com.data.entity.Stockdata;
+import com.data.entity.Ticker;
 import com.jms.response.ResponseProducer;
 
 
@@ -85,14 +90,13 @@ public class StockProvider implements StockProviderRemote, StockProviderLocal {
 		
 	}
 	
-	public String getTemporalData(String format, String StartDate, String EndDate)
+	@Override
+	public String getTemporalData(String StartDate, String EndDate, String format)
 	{
 		//ExtractData data = new ExtractData();
 		return encode(extractTemporalData(StartDate, EndDate), format);
 	}
-	
-	
-	
+
 	
 	@Override
 	public String getAllData(String format)
@@ -198,20 +202,59 @@ public class StockProvider implements StockProviderRemote, StockProviderLocal {
 	@Override
 	public List<Stockdata> getRealTimeData()
 	{
-		em.getTransaction().begin();
+		//em.getTransaction().begin();
 		System.out.println("in extract....");
 		//em.getTransaction().begin();
 	/*	TypedQuery<Stockdata> query = em.createQuery("SELECT st FROM Stockdata st ", Stockdata.class);
 		List<Stockdata> lst = query.getResultList();
 */		//em.getTransaction().commit();
 		//em.close();
-		String q = "SELECT p from " + Stockdata.class.getName() + " p";
+		//Working Query - returns all------------------------------
+		/*String q = "SELECT p from " + Stockdata.class.getName() + " p";
         Query query = em.createQuery(q);
-        List<Stockdata> lst = query.getResultList();
-        em.getTransaction().commit();
-		em.close();
+        List<Stockdata> lst = query.getResultList();*/
+        //Working Query - returns all------------------------------
+		
+		String curr = new String();
+    	final String DATE_FORMAT_NOW = "yyyyMMdd";	
+    	Calendar cal = Calendar.getInstance();
+    	SimpleDateFormat sdf = new SimpleDateFormat(DATE_FORMAT_NOW);
+    	curr = sdf.format(cal.getTime());
+    	System.out.println("Date:"+curr);
+		
+    	Query query1 = em.createQuery("select MAX(d.id.stockDate) FROM Stockdata d ");
+    	List<String> dts= (List<String>)query1.getResultList();
+    	Iterator it1 = dts.iterator();
+    	curr=it1.next().toString();
+    	System.out.println("max date string:" +  curr);
+    	
+		Query query = em.createQuery("select d FROM Stockdata d where d.id.stockDate = :CurrentDate");
+        query.setParameter("CurrentDate", curr);
+        List<Stockdata> lst=(List<Stockdata>) query.getResultList();
+        List<Stockdata> modifylst = new ArrayList<Stockdata>();
+        Iterator itr = lst.iterator();
+        Random randomGenerator = new Random();
+        while (itr.hasNext())
+        {
+        	Stockdata stk = (Stockdata) itr.next();
+        	Stockdata stk1 = stk;
+        	int randomChange = randomGenerator.nextInt(2);
+        	boolean change = randomGenerator.nextBoolean();
+        	if(change)
+        	{
+        		stk1.setHigh((stk.getHigh()+randomChange));
+        	}else
+        	{
+        		stk1.setHigh((stk.getHigh()-randomChange));
+        	}
+        	modifylst.add(stk1);
+        	
+        }
+        
+        //em.getTransaction().commit();
+		//em.close();
 		System.out.println("extract done....");
-		return lst;
+		return modifylst;
 	}
 	
 	public List<Stockdata> extractSpatialLocation(String location)
@@ -256,37 +299,45 @@ public class StockProvider implements StockProviderRemote, StockProviderLocal {
 	
 	public List<Stockdata> extractSpatialIndustry(String industry)
     {
-            
-            //em.getTransaction().begin();
-           
-          
             Query query = em.createQuery("select d FROM Stockdata d,Ticker m where m.ticker=d.id.ticker and m.industry=:industry");
             query.setParameter("industry", industry);
             List<Stockdata> ls=(List<Stockdata>) query.getResultList();
-            
-         
-          //em.getTransaction().commit();
-            //em.close();
-            return ls;
-            
+            return ls;       
     }
 	
 	public List<Stockdata> extractSpatialSector(String sector)
     {
-		System.out.println("sector0");
-            //em.getTransaction().begin();
-           
-            System.out.println("sector0.1");
             Query query = em.createQuery("select d FROM Stockdata d,Ticker m where m.ticker=d.id.ticker and m.sector=:sector");
-            query.setParameter("sector", sector);
-            System.out.println("sector1");
-            List<Stockdata> ls=(List<Stockdata>) query.getResultList();
-            System.out.println("sector2");
-         
-          //em.getTransaction().commit();
-            //em.close();
-            return ls;
-            
+            query.setParameter("sector", sector);            
+            List<Stockdata> ls=(List<Stockdata>) query.getResultList();            
+            return ls;            
     }
-	
+	@Override
+	public List<String> getTicker()
+    {
+            Query query = em.createQuery("select distinct m.ticker FROM Ticker m ");
+            List<String> ls=(List<String>) query.getResultList();         
+            return ls;       
+    }
+	@Override
+	public List<String> getLocation()
+    {
+            Query query = em.createQuery("select distinct m.country FROM Ticker m ");
+            List<String> ls=(List<String>) query.getResultList();         
+            return ls;       
+    }
+	@Override
+	public List<String> getSector()
+    {
+            Query query = em.createQuery("select distinct m.sector FROM Ticker m ");
+            List<String> ls=(List<String>) query.getResultList();         
+            return ls;       
+    }
+	@Override
+	public List<String> getIndustry()
+    {
+            Query query = em.createQuery("select distinct m.industry FROM Ticker m ");
+            List<String> ls=(List<String>) query.getResultList();         
+            return ls;       
+    }
 }
