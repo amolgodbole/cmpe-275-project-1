@@ -75,7 +75,8 @@ public class ReadInput {
 				  br = new BufferedReader(new InputStreamReader(in));
 				  String strLine;
 				  while ((strLine = br.readLine()) != null)   
-				  { 				  
+				  { 	
+					  System.out.println("in readfile module");
 					  data.insert(strLine);
 				  }
 				  in.close();
