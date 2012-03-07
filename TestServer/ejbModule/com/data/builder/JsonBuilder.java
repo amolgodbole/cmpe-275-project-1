@@ -46,6 +46,7 @@ public class JsonBuilder implements IBuilder{
 	public String encode(List<Stockdata> msg) {
 		try {
 			ObjectMapper mapper = new ObjectMapper();
+			System.out.println("JSON..Writing to file...");
 			mapper.writeValue(new File("stock.json"), msg);
 			//System.out.println("Converted to JSON:" + mapper.writeValueAsString(msg));
 			return mapper.writeValueAsString(msg);
