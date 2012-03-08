@@ -75,18 +75,18 @@ public class StockProvider implements StockProviderRemote, StockProviderLocal {
 		return get_builder(type).encode(msg);
 		
 	}
-	
-	public String getSpatialData(String format, String ticker, boolean range, String StartDate, String EndDate)
+	@Override
+	public String getTemporalData(String StartDate, String EndDate, String ticker, String format)
 	{
-		//ExtractData data = new ExtractData();
+/*		//ExtractData data = new ExtractData();
 		if(range) //gets the spatial data for the specified region with date range
-		{
-			return encode(extractSpatialData(ticker, StartDate, EndDate), format);
-		}
+		{*/
+			return encode(extractTemporalData(ticker, StartDate, EndDate), format);
+/*		}
 		else //gets the spatial entire dataset for the specified region
-		{		
-			return encode(extractAllSpatialData(ticker), format);
-		}
+		{*/		
+			//return encode(extractTemporalData(StartDate, EndDate), format);
+		//}
 		
 	}
 	
@@ -137,35 +137,37 @@ public class StockProvider implements StockProviderRemote, StockProviderLocal {
 	
 	// Extract Methods*************************************************************************************************
 	//getSpatialData - gets the spatial data with region and range
-	public List<Stockdata> extractSpatialData(String ticker, String StartDate, String EndDate)
+	public List<Stockdata> extractTemporalData(String ticker, String StartDate, String EndDate)
 	{
-		em.getTransaction().begin();
+		//em.getTransaction().begin();
 
-	    TypedQuery<Stockdata> query = em.createQuery("SELECT st FROM Stockdata st WHERE st.id.ticker = :ticker AND st.id.stockDate BETWEEN :StartDate AND :EndDate", Stockdata.class);
+	
+		
+		Query query = em.createQuery("SELECT st FROM Stockdata st WHERE st.id.ticker = :ticker AND st.id.stockDate BETWEEN :StartDate AND :EndDate");
 		query.setParameter("ticker", ticker);
 		query.setParameter("StartDate", StartDate);
 		query.setParameter("EndDate", EndDate);
 
 		List<Stockdata> lst = query.getResultList();
-		em.getTransaction().commit();
-		em.close();
+		//em.getTransaction().commit();
+		//em.close();
 		return lst;
 	}
 	//getSpatialData - gets all the spatial data for the region
-	public List<Stockdata> extractAllSpatialData(String ticker)
+	public List<Stockdata> extractTemporalData(String StartDate, String EndDate)
 	{
-		em.getTransaction().begin();
+		//em.getTransaction().begin();
 
-	    TypedQuery<Stockdata> query = em.createQuery("SELECT st FROM Stockdata st WHERE st.id.ticker = :ticker ", Stockdata.class);
-		query.setParameter("ticker", ticker);
-
+		Query query = em.createQuery("SELECT st FROM Stockdata st WHERE st.id.stockDate BETWEEN :StartDate AND :EndDate");
+		query.setParameter("StartDate", StartDate);
+		query.setParameter("EndDate", EndDate);
 		List<Stockdata> lst = query.getResultList();
-		em.getTransaction().commit();
-		em.close();
+		//em.getTransaction().commit();
+		//em.close();
 		return lst;
 	}
 	//getTemporalData - gets the temporal data 
-	public List<Stockdata> extractTemporalData(String StartDate, String EndDate)
+/*	public List<Stockdata> extractTemporalData(String StartDate, String EndDate)
 	{	
 		em.getTransaction().begin();
 
@@ -177,7 +179,7 @@ public class StockProvider implements StockProviderRemote, StockProviderLocal {
 		em.getTransaction().commit();
 		em.close();
 		return lst;
-	}
+	}*/
 	
 	//extract all
 	@Override

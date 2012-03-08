@@ -15,6 +15,7 @@ public interface StockProviderRemote {
 	public List<Stockdata> extract();
 	//Temporal
 	public String getTemporalData(String StartDate, String EndDate, String format);	
+	public String getTemporalData(String StartDate, String EndDate, String ticker, String format);
 	//Spatial data
 	public String getSpatialLocation(String location, String format);
 	public String getSpatialIndustry(String industry, String format);
